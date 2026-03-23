@@ -8,6 +8,10 @@ jobs:
   terraform:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        dir: [day1, day2, day3, day4]
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,12 +21,16 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: ${{ matrix.dir }}
 
       - name: Terraform Format
         run: terraform fmt -check
+        working-directory: ${{ matrix.dir }}
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: ${{ matrix.dir }}
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: ${{ matrix.dir }}

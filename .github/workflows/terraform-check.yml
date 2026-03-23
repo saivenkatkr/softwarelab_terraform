@@ -32,5 +32,10 @@ jobs:
         working-directory: ${{ matrix.dir }}
 
       - name: Terraform Plan
-        run: terraform plan
+        run: |
+          if [ -f "dev.tfvars" ]; then
+            terraform plan -var-file="dev.tfvars"
+          else
+            terraform plan
+          fi
         working-directory: ${{ matrix.dir }}
